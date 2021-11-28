@@ -1,0 +1,24 @@
+{
+  "name": "dominos-pizza-clone-apps",
+  "version": "0.0.1",
+  "description": "A RESTful API to support Domino's Pizza Web Apps Clone",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "nodemon ./src/server.js",
+    "lint": "eslint ./src"
+  },
+  "keywords": [],
+  "author": "CongliCorp",
+  "license": "GNU General Public License v3 (GPL-3)",
+  "devDependencies": {
+    "eslint": "^8.3.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^20.2.1",
+    "dotenv": "^10.0.0",
+    "migrate-mongo": "^8.2.3",
+    "mongodb": "^4.2.0"
+  }
+}

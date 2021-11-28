@@ -1,0 +1,1583 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Domino's Pizza Web Clone RESTful API",
+    "version": "0.0.1",
+    "description": "A RESTful API to support Domino's Pizza Web Apps Clone",
+    "contact": {
+      "name": "Andrian",
+      "email": "andrian8367@gmail.com",
+      "url": "https://github.com/bpkcongli"
+    },
+    "license": {
+      "name": "GNU General Public License v3 (GPL-3)",
+      "url": "https://tldrlegal.com/license/gnu-general-public-license-v3-(gpl-3)"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://{environment}.conglicorp.net/api/v1",
+      "description": "RESTful API Servers",
+      "variables": {
+        "environment": {
+          "default": "dev",
+          "description": "Server environment",
+          "enum": ["dev", "stage", "prod"]
+        }
+      }
+    }
+  ],
+  "externalDocs": {
+    "url": "https://www.youtube.com/c/ProgrammerZamanNow",
+    "description": "Youtube Channel Programmer Akhir Zaman"
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["User"],
+        "summary": "Add a new user account into the database",
+        "description": "Store a new user credentials including <i>first name</i>, <i>last name</i>, <i>email</i>, and <i>encrypted password</i> and other details about each user like <i>contact number</i>, <i>date of birth</i>, and <i>addresses</i> into the database.",
+        "requestBody": {
+          "$ref": "#/components/requestBodies/User"
+        },
+        "responses": {
+          "201": {
+            "description": "A new user account successfully added to the database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "message": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/ResponseMessage"
+                        },
+                        {
+                          "example": "User baru berhasil ditambahkan."
+                        }
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after successfully doing the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "userId": {
+                          "type": "string",
+                          "description": "A unique ID of a specific user.",
+                          "nullable": false,
+                          "example": "user-00000001"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/users/{userId}": {
+      "get": {
+        "tags": ["User"],
+        "summary": "Get all informations from specific user",
+        "description": "Get all informations about credentials and other useful details about specific user using a unique <b>user ID</b>.",
+        "security": [
+          {
+            "DominosPizzaAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get all informations from specific user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "user": {
+                          "description": "A user object represent all informations from specific user.",
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "nullable": false,
+                              "properties": {
+                                "userId": {
+                                  "type": "string",
+                                  "description": "A unique ID of a specific user.",
+                                  "nullable": false,
+                                  "example": "user-00000001"
+                                }
+                              }
+                            },
+                            {
+                              "$ref": "#/components/schemas/User"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["User"],
+        "summary": "Update information from specific user",
+        "description": "Update all informations about credentials and other useful details about specific user using a unique <b>user ID</b>.",
+        "security": [
+          {
+            "DominosPizzaAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/User"
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully updated the profile into the database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatus"
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/ResponseMessage"
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Profil user berhasil diperbarui."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/users/{userId}/carts": {
+      "get": {
+        "tags": ["User", "Cart"],
+        "summary": "Get cart information from specific user",
+        "description": "Get cart information including each item that added to the cart, each item <i>quantity</i>, <i>subtotal</i>, <i>fee</i>, and a whole total that have to pay by a specific user.",
+        "security": [
+          {
+            "DominosPizzaAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get all informations from the cart of the specific user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "cart": {
+                          "description": "An object represent the cart from specific user.",
+                          "allOf": [
+                            {
+                              "type": "object",
+                              "nullable": false,
+                              "properties": {
+                                "userId": {
+                                  "type": "string",
+                                  "nullable": false,
+                                  "description": "A unique ID of a specific user.",
+                                  "example": "user-000000001"
+                                }
+                              }
+                            },
+                            {
+                              "$ref": "#/components/schemas/Cart"
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["User", "Cart"],
+        "summary": "Update cart information from specific user",
+        "description": "Update cart information from specific user. This is must be triggered when users added a new item into their cart, or changes the quantity of one of the items they added.",
+        "security": [
+          {
+            "DominosPizzaAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Cart"
+        },
+        "responses": {
+          "200": {
+            "description": "Users updated the information of their cart.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatus"
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/ResponseMessage"
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Keranjang user berhasil diperbarui."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/users/{userId}/orders": {
+      "get": {
+        "tags": ["User", "Order"],
+        "summary": "Get all finished orders from specific user",
+        "description": "Get all past orders completed from specific user.",
+        "security": [
+          {
+            "DominosPizzaAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get all finished orders of the specific user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "orders": {
+                          "type": "array",
+                          "description": "List of finished orders of the specific user.",
+                          "nullable": false,
+                          "items": {
+                            "$ref": "#/components/schemas/Order"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/authentications": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Return an access token and store refresh token",
+        "description": "Return an access token that user can used to authorize any operation in the apps. It also generate a refresh token and store it into the database.",
+        "requestBody": {
+          "required": true,
+          "description": "A user credentials to generate access token and refresh token.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "A user credentials including email and password.",
+                "nullable": false,
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "An email of a specific user.",
+                    "nullable": false,
+                    "example": "andrian8367@gmail.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "A encrypted password of a specific user.",
+                    "nullable": false,
+                    "example": "rahasia2021"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The client successfully generate access token and refresh token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "message": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/ResponseMessage"
+                        },
+                        {
+                          "example": "Authentication berhasil ditambahkan."
+                        }
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after successfully doing the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "An access token that user will use to authorize any operation.",
+                          "nullable": false,
+                          "example": "c8d63108af63e203d1cdd84afda2f"
+                        },
+                        "refreshToken": {
+                          "type": "string",
+                          "description": "A refresh token that user will use to generate a new access token.",
+                          "nullable": false,
+                          "example": "c8d63108af63e203d1cdd84afda2f"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Authentication"],
+        "summary": "Generate a new access token using an existing refresh token.",
+        "description": "Retrieve a refresh token from database and compare it with refresh token owned by user. If <b>true</b>, generate a new access token and return it back to the user.",
+        "requestBody": {
+          "description": "A refresh token of a specific user.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "refreshToken": {
+                    "type": "string",
+                    "description": "A refresh token of a specific user.",
+                    "nullable": false,
+                    "example": "c8d63108af63e203d1cdd84afda2f3f586290adec0ccc7f5ec258e84b5de2bb7a0145a1f6195324a28538a12fc8aef830a373ef51fd9691700da7e2d286a5e37"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The client successfully generate a new access token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "message": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/ResponseMessage"
+                        },
+                        {
+                          "example": "Authentication berhasil diperbarui."
+                        }
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after successfully doing the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "accessToken": {
+                          "type": "string",
+                          "description": "A new generated access token.",
+                          "nullable": false,
+                          "example": "c8d63108af63e203d1cdd84afda2f"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/authentications/{refreshToken}": {
+      "delete": {
+        "tags": ["Authentication"],
+        "summary": "Delete a refresh token from the database",
+        "description": "Delete a refresh token from the database when a user is not longer using the application or user logout from the application.",
+        "parameters": [
+          {
+            "description": "A refresh token of a specific user.",
+            "in": "path",
+            "required": true,
+            "name": "refreshToken",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The client successfully delete a refresh token from the database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "message": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/ResponseMessage"
+                        },
+                        {
+                          "example": "Authentication berhasil dihapus."
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/orders": {
+      "post": {
+        "tags": ["Order"],
+        "summary": "Store a new order information into the database",
+        "description": "Add a new order information checkout by specific user including all ordered items, total bill, shipping address, and payment method that user used to.",
+        "security": [
+          {
+            "DominosPizzaAuth": []
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/components/requestBodies/Order"
+        },
+        "responses": {
+          "201": {
+            "description": "The new order is successfully checkout by the user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "message": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/ResponseMessage"
+                        },
+                        {
+                          "example": "Order baru berhasil ditambahkan."
+                        }
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after successfully doing the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "orderId": {
+                          "type": "string",
+                          "description": "A unique ID of a specific order.",
+                          "nullable": false,
+                          "example": "order-00000001"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/menus": {
+      "post": {
+        "tags": ["Menu"],
+        "summary": "Add a new menu into the database",
+        "description": "Add a new menu and their details including <i>short description</i> and <i>price</i> into the database.",
+        "security": [
+          {
+            "DominosPizzaAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Menu information and details.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/Pizza"
+                  },
+                  {
+                    "$ref": "#/components/schemas/NonPizza"
+                  }
+                ]
+              },
+              "examples": {
+                "Pizza": {
+                  "$ref": "#/components/examples/Pizza"
+                },
+                "Non-Pizza": {
+                  "$ref": "#/components/examples/Non-Pizza"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "A new menu is successfully added into the database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "message": {
+                      "allOf": [
+                        {
+                          "$ref": "#/components/schemas/ResponseMessage"
+                        },
+                        {
+                          "example": "Menu baru berhasil ditambahkan."
+                        }
+                      ]
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after successfully doing the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "menuId": {
+                          "type": "string",
+                          "description": "A unique ID of a specific menu.",
+                          "nullable": false,
+                          "example": "menu-00000001"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      },
+      "get": {
+        "tags": ["Menu"],
+        "summary": "Get all menus specific per category",
+        "description": "Get all menus and their details respectively specific per category.",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully get all menus stored on the database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after successfully doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "data": {
+                      "type": "object",
+                      "description": "A return data that was generated after the operation.",
+                      "nullable": false,
+                      "properties": {
+                        "menus": {
+                          "type": "array",
+                          "description": "List of menus stored on the database.",
+                          "nullable": false,
+                          "items": {
+                            "oneOf": [
+                              {
+                                "$ref": "#/components/schemas/Pizza"
+                              },
+                              {
+                                "$ref": "#/components/schemas/NonPizza"
+                              }
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "UserId": {
+        "name": "userId",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "requestBodies": {
+      "User": {
+        "required": true,
+        "description": "User credentials and other details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/User"
+            }
+          }
+        }
+      },
+      "Cart": {
+        "description": "Cart information of a specific user",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Cart"
+            }
+          }
+        }
+      },
+      "Order": {
+        "description": "An object represent an order and details.",
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Order"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "nullable": false,
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "description": "A first name of a specific user.",
+            "nullable": false,
+            "minLength": 1,
+            "example": "Andrian"
+          },
+          "lastName": {
+            "type": "string",
+            "description": "A last name of a specific user.",
+            "nullable": false,
+            "example": "Candra"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "description": "An email of a specific user.",
+            "nullable": false,
+            "example": "andrian8367@gmail.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "An encrypted password of a specific user.",
+            "nullable": false,
+            "minLength": 8,
+            "example": "rahasia2021"
+          },
+          "dateOfBirth": {
+            "type": "string",
+            "format": "date",
+            "description": "A date of birth of a specific user.",
+            "nullable": false,
+            "example": "2000-04-08"
+          },
+          "contact": {
+            "type": "object",
+            "description": "Contact information of a specific user.",
+            "nullable": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": ["Mobile", "Home", "Office"],
+                "description": "Type of contact number whether mobile, home, or office.",
+                "nullable": false
+              },
+              "number": {
+                "type": "string",
+                "format": "numeric",
+                "description": "A contact number of a specific user.",
+                "nullable": false,
+                "example": "081234567890"
+              }
+            }
+          },
+          "addresses": {
+            "type": "array",
+            "description": "List of addresses correspond to specific user.",
+            "nullable": false,
+            "minItems": 0,
+            "items": {
+              "type": "object",
+              "nullable": false,
+              "description": "An address object correspond to specific user.",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "description": "Type of address whether home address or office address.",
+                  "nullable": false
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "Complete address including street name, building name, building number, block, clusters, etc.",
+                  "nullable": false
+                },
+                "district": {
+                  "type": "string",
+                  "description": "A district from user's address.",
+                  "nullable": false
+                },
+                "city": {
+                  "type": "string",
+                  "description": "A city from user's address.",
+                  "nullable": false
+                },
+                "province": {
+                  "type": "string",
+                  "description": "A province from user's address.",
+                  "nullable": false
+                }
+              }
+            },
+            "example": [{
+              "type": "Home",
+              "detail": "Perumahan Alam Permai, Jl. Cibodas Permai Blok A6 No.4 RT/RW 004/010",
+              "district": "Cibodas",
+              "city": "Kota Tangerang",
+              "province": "Banten"
+            }]
+          }
+        }
+      },
+      "Cart": {
+        "type": "object",
+        "nullable": false,
+        "properties": {
+          "items": {
+            "type": "array",
+            "nullable": false,
+            "description": "Any items that user added to the cart.",
+            "minItems": 0,
+            "items": {
+              "type": "object",
+              "nullable": false,
+              "description": "An object represent an item that user added to the cart.",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "A name of item that user added to the cart.",
+                  "nullable": false
+                },
+                "category": {
+                  "type": "string",
+                  "description": "A category of item that user added to the cart.",
+                  "nullable": false
+                },
+                "details": {
+                  "type": "object",
+                  "description": "Details (if any) of the item that user added to the cart.",
+                  "nullable": true
+                },
+                "qty": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "A quantity of item that user added to the cart.",
+                  "nullable": false
+                },
+                "priceOrigin": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "A price before tax of the item that user added to the cart.",
+                  "nullable": false
+                }
+              }
+            },
+            "example": [{
+              "name": "American Classic Cheeseburger",
+              "category": "Pizza",
+              "details": {
+                "size": "Medium",
+                "crust": "Classic Handtossed"
+              },
+              "qty": 1,
+              "priceOrigin": 79546
+            }]
+          },
+          "subtotal": {
+            "type": "integer",
+            "format": "int32",
+            "description": "A whole total before tax.",
+            "nullable": false,
+            "example": 79546
+          },
+          "taxFee": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Tax fees that are charged to the user.",
+            "nullable": false,
+            "example": 7954
+          },
+          "deliveryFee": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Delivery fees (if any) that are charged to the user.",
+            "nullable": false,
+            "example": 0
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32",
+            "description": "A whole total including tax fee and delivery fee.",
+            "nullable": false,
+            "example": 87500
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "description": "An object represent an order and details.",
+        "nullable": false,
+        "properties": {
+          "orderId": {
+            "type": "string",
+            "description": "A unique ID of a specific order.",
+            "nullable": false,
+            "example": "order-00000001"
+          },
+          "orderTime": {
+            "type": "string",
+            "description": "The date and time the order was made.",
+            "nullable": false,
+            "example": "2021-11-24 22:16:06"
+          },
+          "userId": {
+            "type": "string",
+            "description": "A unique ID of a specific user.",
+            "nullable": false,
+            "example": "user-00000001"
+          },
+          "items": {
+            "type": "array",
+            "nullable": false,
+            "description": "Any items that user added to the order.",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "nullable": false,
+              "description": "An object represent an item that user added to the order.",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "A name of item that user added to the order.",
+                  "nullable": false
+                },
+                "category": {
+                  "type": "string",
+                  "description": "A category of item that user added to the order.",
+                  "nullable": false
+                },
+                "details": {
+                  "type": "object",
+                  "description": "Details (if any) of the item that user added to the order.",
+                  "nullable": true
+                },
+                "qty": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "A quantity of item that user added to the order.",
+                  "nullable": false
+                },
+                "priceOrigin": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "A price before tax of the item that user added to the order.",
+                  "nullable": false
+                }
+              }
+            },
+            "example": [{
+              "name": "American Classic Cheeseburger",
+              "category": "Pizza",
+              "details": {
+                "size": "Medium",
+                "crust": "Classic Handtossed"
+              },
+              "qty": 1,
+              "priceOrigin": 79546
+            }]
+          },
+          "subtotal": {
+            "type": "integer",
+            "format": "int32",
+            "description": "A whole total before tax.",
+            "nullable": false,
+            "example": 79546
+          },
+          "taxFee": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Tax fees that are charged to the user.",
+            "nullable": false,
+            "example": 7954
+          },
+          "deliveryFee": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Delivery fees (if any) that are charged to the user.",
+            "nullable": false,
+            "example": 0
+          },
+          "total": {
+            "type": "integer",
+            "format": "int32",
+            "description": "A whole total including tax fee and delivery fee.",
+            "nullable": false,
+            "example": 87500
+          },
+          "deliveryAddress": {
+            "type": "object",
+            "description": "An address that the order was sent to.",
+            "nullable": false,
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of address whether home address or office address.",
+                "nullable": false
+              },
+              "detail": {
+                "type": "string",
+                "description": "Complete address including street name, building name, building number, block, clusters, etc.",
+                "nullable": false
+              },
+              "district": {
+                "type": "string",
+                "description": "A district from delivery address.",
+                "nullable": false
+              },
+              "city": {
+                "type": "string",
+                "description": "A city from delivery address.",
+                "nullable": false
+              },
+              "province": {
+                "type": "string",
+                "description": "A province from delivery address.",
+                "nullable": false
+              }
+            },
+            "example": {
+              "type": "Home",
+              "detail": "Perumahan Alam Permai, Jl. Cibodas Permai Blok A6 No.4 RT/RW 004/010",
+              "district": "Cibodas",
+              "city": "Kota Tangerang",
+              "province": "Banten"
+            }
+          },
+          "orderNow": {
+            "type": "boolean",
+            "description": "The user's order made now or later.",
+            "nullable": false,
+            "example": true
+          },
+          "orderLaterAfter": {
+            "type": "integer",
+            "format": "int32",
+            "description": "The user's order made after a certain period of time (in minutes).",
+            "nullable": true,
+            "example": null
+          },
+          "paymentMethod": {
+            "type": "string",
+            "description": "Payment method that user used to pay the order.",
+            "nullable": false,
+            "example": "Cash"
+          }
+        }
+      },
+      "PizzaSize": {
+        "type": "object",
+        "description": "An object represent a size of a pizza.",
+        "nullable": false,
+        "properties": {
+          "size": {
+            "type": "string",
+            "description": "A size name of a pizza.",
+            "nullable": false
+          },
+          "sizeInInch": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Diameter of a pizza in inch.",
+            "nullable": false
+          },
+          "totalSlice": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total slice of a pizza.",
+            "nullable": false
+          },
+          "crusts": {
+            "type": "array",
+            "description": "Kinds of pizza crust available.",
+            "nullable": false,
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "description": "An object represent a kind of pizza crust.",
+              "nullable": false,
+              "properties": {
+                "crust": {
+                  "type": "string",
+                  "description": "A crust name of a pizza.",
+                  "nullable": false
+                },
+                "desc": {
+                  "type": "string",
+                  "description": "A short description about a specific crust of a pizza.",
+                  "nullable": false
+                },
+                "priceOrigin": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "A price before tax of a pizza with specific size and crust.",
+                  "nullable": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "Pizza": {
+        "type": "object",
+        "nullable": false,
+        "description": "Menu information and details.",
+        "properties": {
+          "menuId": {
+            "type": "string",
+            "description": "A unique ID of a specific menu.",
+            "nullable": false
+          },
+          "name": {
+            "type": "string",
+            "description": "A name of a menu.",
+            "nullable": false
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "A url link of the image of a menu.",
+            "nullable": false
+          },
+          "category": {
+            "type": "string",
+            "description": "A category of a menu.",
+            "nullable": false
+          },
+          "ranges": {
+            "type": "string",
+            "description": "A sub-category of a menu.",
+            "nullable": false
+          },
+          "details": {
+            "type": "object",
+            "description": "A details of a menu.",
+            "nullable": true,
+            "properties": {
+              "toppings": {
+                "type": "array",
+                "description": "Toppings of a pizza.",
+                "nullable": false,
+                "minItems": 1,
+                "items": {
+                  "type": "string",
+                  "nullable": false
+                }
+              },
+              "sizes": {
+                "type": "array",
+                "description": "Any sizes of a pizza.",
+                "nullable": false,
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/components/schemas/PizzaSize"
+                }
+              }
+            }
+          }
+        },
+        "example": {
+          "$ref": "#/components/examples/Pizza/value"
+        }
+      },
+      "NonPizza": {
+        "type": "object",
+        "nullable": false,
+        "description": "Menu information and details.",
+        "properties": {
+          "menuId": {
+            "type": "string",
+            "description": "A unique ID of a specific menu.",
+            "nullable": false
+          },
+          "name": {
+            "type": "string",
+            "description": "A name of a menu.",
+            "nullable": false
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "A url link directly to a location of the image from a menu is stored.",
+            "nullable": false
+          },
+          "category": {
+            "type": "string",
+            "description": "A category of a menu.",
+            "nullable": false
+          },
+          "ranges": {
+            "type": "string",
+            "description": "A sub-category of a menu.",
+            "nullable": false
+          },
+          "desc": {
+            "type": "string",
+            "description": "A short description of a menu.",
+            "nullable": false
+          },
+          "priceOrigin": {
+            "type": "integer",
+            "format": "int32",
+            "description": "A price before tax of a menu.",
+            "nullable": false
+          }
+        },
+        "example": {
+          "$ref": "#/components/examples/Non-Pizza/value"
+        }
+      },
+      "ResponseStatus": {
+        "type": "string",
+        "description": "A status about the result of the operation.",
+        "nullable": false
+      },
+      "ResponseStatusSuccess": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          {
+            "example": "success"
+          }
+        ]
+      },
+      "ResponseMessage": {
+        "type": "string",
+        "description": "A message that inform the client about the result of the operation.",
+        "nullable": false
+      },
+      "ResponseError": {
+        "type": "object",
+        "description": "Some information that was generated after doing the operation.",
+        "nullable": false,
+        "properties": {
+          "status": {
+            "$ref": "#/components/schemas/ResponseStatus"
+          },
+          "message": {
+            "$ref": "#/components/schemas/ResponseMessage"
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequestError": {
+        "description": "The request body that the client provided does not match the schema.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResponseError"
+            },
+            "example": {
+              "status": "fail",
+              "message": "400 Bad Request"
+            }
+          }
+        }
+      },
+      "AuthenticationError": {
+        "description": "The client uses a incorrect credentials to authenticate to the server.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResponseError"
+            },
+            "example": {
+              "status": "fail",
+              "message": "Maaf, Anda membutuhkan kredensial untuk mengakses resource ini."
+            }
+          }
+        }
+      },
+      "AuthorizationError": {
+        "description": "The client try to access an unauthorized resources.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResponseError"
+            },
+            "example": {
+              "status": "fail",
+              "message": "Maaf, Anda tidak memiliki otorisasi untuk mengakses resource ini."
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "The client try to access a resources that not found on the server.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResponseError"
+            },
+            "example": {
+              "status": "fail",
+              "message": "Maaf, resource yang Anda minta tidak ditemukan pada server kami."
+            }
+          }
+        }
+      },
+      "ServerError": {
+        "description": "An error occured on the server.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResponseError"
+            },
+            "example": {
+              "status": "error",
+              "message": "Maaf, terjadi kegagalan pada server kami."
+            }
+          }
+        }
+      }
+    },
+    "examples": {
+      "Pizza": {
+        "description": "Example for Pizza menu",
+        "value": {
+          "menuId": "menu-00000001",
+          "name": "American Classic Cheeseburger",
+          "imageUrl": "https://conglicorp.net/menu/american-classic-cheeseburger-550x550px.png",
+          "category": "Pizza",
+          "ranges": "Premium",
+          "details": {
+            "toppings": [
+              "Tomato Sauce",
+              "Mustard Sauce",
+              "Tomato",
+              "Beef Rasher",
+              "Beef Crumble",
+              "Onion",
+              "Slice Cheese",
+              "Mozarella Cheese"
+            ],
+            "sizes": [
+              {
+                "size": "Medium",
+                "sizeInInch": 9,
+                "totalSlice": 6,
+                "crusts": [
+                  {
+                    "crust": "Classic Handtossed",
+                    "desc": "Roti pizza dengan ketebalan sedang, lembut di bagian dalam namun renyah di bagian luar.",
+                    "priceOrigin": 79546
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "Non-Pizza": {
+        "description": "Example for Non-Pizza menu",
+        "value": {
+          "menuId": "menu-00000002",
+          "name": "Habanero Boneless Wings (6 pcs)",
+          "imageUrl": "https://conglicorp.net/menu/habanero-boneless-wings-550x550px.png",
+          "category": "Side & Dessert",
+          "ranges": "Chicken",
+          "desc": "Sayap ayam tanpa tulang dengan sensasi pedas khas cabai habanero.",
+          "priceOrigin": 45455
+        }
+      }
+    },
+    "securitySchemes": {
+      "DominosPizzaAuth": {
+        "type": "http",
+        "description": "JWT token will be used to authorize any resource from this API.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
