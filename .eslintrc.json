@@ -12,6 +12,8 @@
         "ecmaVersion": 2021
     },
     "rules": {
-        "max-len": 0
+        "max-len": 0,
+        "require-jsdoc": 0,
+        "camelcase": 0
     }
 }

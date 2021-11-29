@@ -4,7 +4,7 @@ require('dotenv').config();
 const config = {
   mongodb: {
     // TODO Change (or review) the url to your MongoDB:
-    url: `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0.h58kp.mongodb.net`,
+    url: process.env.MONGO_HOST,
 
     // TODO Change this to your database name:
     databaseName: process.env.DATABASE_NAME,

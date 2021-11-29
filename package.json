@@ -17,8 +17,10 @@
   },
   "dependencies": {
     "@hapi/hapi": "^20.2.1",
+    "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
     "migrate-mongo": "^8.2.3",
-    "mongodb": "^4.2.0"
+    "mongodb": "^4.2.0",
+    "nanoid": "^3.1.30"
   }
 }
