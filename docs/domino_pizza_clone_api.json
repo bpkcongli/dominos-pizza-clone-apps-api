@@ -36,9 +36,9 @@
       "post": {
         "tags": ["User"],
         "summary": "Add a new user account into the database",
-        "description": "Store a new user credentials including <i>first name</i>, <i>last name</i>, <i>email</i>, and <i>encrypted password</i> and other details about each user like <i>contact number</i>, <i>date of birth</i>, and <i>addresses</i> into the database.",
+        "description": "Store a new user credentials including <i>first name</i>, <i>last name</i>, <i>email</i>, <i>password</i> and other details about each user like <i>contact number</i>, <i>date of birth</i>, and <i>addresses</i> into the database.",
         "requestBody": {
-          "$ref": "#/components/requestBodies/User"
+          "$ref": "#/components/requestBodies/CreateUser"
         },
         "responses": {
           "201": {
@@ -179,7 +179,7 @@
           }
         ],
         "requestBody": {
-          "$ref": "#/components/requestBodies/User"
+          "$ref": "#/components/requestBodies/UpdateUser"
         },
         "responses": {
           "200": {
@@ -201,6 +201,93 @@
                   "example": {
                     "status": "success",
                     "message": "Profil user berhasil diperbarui."
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequestError"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationError"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          },
+          "500": {
+            "$ref": "#/components/responses/ServerError"
+          }
+        }
+      }
+    },
+    "/users/{userId}/password": {
+      "put": {
+        "tags": ["User"],
+        "summary": "Update password from specific user",
+        "description": "Users can update their password but this requires their current password.",
+        "security": [
+          {
+            "DominosPizzaAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/UserId"
+          }
+        ],
+        "requestBody": {
+          "description": "A current password and a new password from the specific user.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "description": "A current password and a new password from the specific user.",
+                "nullable": false,
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "description": "A current password from the specific user that stored in the database.",
+                    "nullable": false,
+                    "minLength": 8,
+                    "example": "rahasia2021"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "description": "A new password from the specific user.",
+                    "nullable": false,
+                    "minLength": 8,
+                    "example": "rahasia2022"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User successfully updated the password.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "description": "Some information that was generated after doing the operation.",
+                  "nullable": false,
+                  "properties": {
+                    "status": {
+                      "$ref": "#/components/schemas/ResponseStatusSuccess"
+                    },
+                    "message": {
+                      "$ref": "#/components/schemas/ResponseMessage"
+                    }
+                  },
+                  "example": {
+                    "status": "success",
+                    "message": "Password user berhasil diperbarui."
                   }
                 }
               }
@@ -444,7 +531,7 @@
                   },
                   "password": {
                     "type": "string",
-                    "description": "A encrypted password of a specific user.",
+                    "description": "A password of a specific user.",
                     "nullable": false,
                     "example": "rahasia2021"
                   }
@@ -870,7 +957,35 @@
       }
     },
     "requestBodies": {
-      "User": {
+      "CreateUser": {
+        "required": true,
+        "description": "User credentials and other details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/User"
+                },
+                {
+                  "type": "object",
+                  "nullable": false,
+                  "properties": {
+                    "password": {
+                      "type": "string",
+                      "description": "A password of a specific user.",
+                      "nullable": false,
+                      "minLength": 8,
+                      "example": "rahasia2021"
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        }
+      },
+      "UpdateUser": {
         "required": true,
         "description": "User credentials and other details.",
         "content": {
@@ -928,13 +1043,6 @@
             "description": "An email of a specific user.",
             "nullable": false,
             "example": "andrian8367@gmail.com"
-          },
-          "password": {
-            "type": "string",
-            "description": "An encrypted password of a specific user.",
-            "nullable": false,
-            "minLength": 8,
-            "example": "rahasia2021"
           },
           "dateOfBirth": {
             "type": "string",

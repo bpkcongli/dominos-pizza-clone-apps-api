@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const DatabaseUtils = require('../../utils/DatabaseUtils');
 const {nanoid, User} = require('../../utils/ModelUtils');
 const BadRequestError = require('../../exceptions/BadRequestError');
@@ -18,13 +19,15 @@ class UsersService {
     const users = await db.collection('users');
 
     const userId = `user-${nanoid()}`;
-    const createdAt = lastUpdated = new Date();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const createdAt = new Date();
+    const lastUpdated = createdAt;
     const userDocument = User.mappingToDB({
       userId,
       firstName,
       lastName,
       email,
-      password,
+      password: hashedPassword,
       dateOfBirth,
       contact,
       addresses,
@@ -49,7 +52,6 @@ class UsersService {
     firstName,
     lastName,
     email,
-    password,
     dateOfBirth,
     contact,
     addresses,
@@ -61,7 +63,6 @@ class UsersService {
         'first_name': firstName,
         'last_name': lastName,
         email,
-        password,
         'date_of_birth': dateOfBirth,
         contact,
         addresses,
@@ -72,6 +73,26 @@ class UsersService {
     if (!result.matchedCount) {
       throw new NotFoundError('Maaf, resource yang Anda minta tidak ditemukan pada server kami.');
     }
+  }
+
+  async updateUserPassword(id, {currentPassword, newPassword}) {
+    const db = await DatabaseUtils.createConnection();
+    const users = await db.collection('users');
+    const targetUser = await users.findOne({user_id: id});
+
+    if (!targetUser) throw new NotFoundError('Maaf, resource yang Anda minta tidak ditemukan pada server kami.');
+
+    const {password: hashedPassword} = targetUser;
+    const result = await bcrypt.compare(currentPassword, hashedPassword);
+
+    if (!result) throw new BadRequestError('Gagal memperbarui password. Kredensial yang Anda berikan salah.');
+
+    const newHashedPassword = await bcrypt.hash(newPassword, 10);
+    await users.updateOne({user_id: id}, {
+      '$set': {
+        'password': newHashedPassword,
+      },
+    });
   }
 
   async _verifyEmail(email) {
