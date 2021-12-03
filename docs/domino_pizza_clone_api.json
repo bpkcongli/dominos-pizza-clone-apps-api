@@ -1150,6 +1150,7 @@
                 "qty": {
                   "type": "integer",
                   "format": "int32",
+                  "minimum": 1,
                   "description": "A quantity of item that user added to the cart.",
                   "nullable": false
                 },

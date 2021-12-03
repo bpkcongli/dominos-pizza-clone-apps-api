@@ -31,6 +31,13 @@ class UsersService {
       dateOfBirth,
       contact,
       addresses,
+      cart: {
+        items: [],
+        subtotal: 0,
+        tax_fee: 0,
+        delivery_fee: 0,
+        total: 0,
+      },
       createdAt,
       lastUpdated,
     });

@@ -11,6 +11,7 @@ const User = {
     dateOfBirth,
     contact,
     addresses,
+    cart,
     createdAt,
     lastUpdated,
   }) {
@@ -23,6 +24,7 @@ const User = {
       date_of_birth: dateOfBirth,
       contact,
       addresses,
+      cart,
       created_at: createdAt,
       last_updated: lastUpdated,
     };
@@ -53,7 +55,26 @@ const User = {
   },
 };
 
+const Cart = {
+  mappingToDB({
+    items,
+    subtotal,
+    taxFee,
+    deliveryFee,
+    total,
+  }) {
+    return {
+      items,
+      sub_total: subtotal,
+      tax_fee: taxFee,
+      delivery_fee: deliveryFee,
+      total,
+    };
+  },
+};
+
 module.exports = {
   nanoid,
   User,
+  Cart,
 };
