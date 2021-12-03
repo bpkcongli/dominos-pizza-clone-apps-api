@@ -1154,7 +1154,7 @@
                   "description": "A quantity of item that user added to the cart.",
                   "nullable": false
                 },
-                "priceOrigin": {
+                "price": {
                   "type": "integer",
                   "format": "int32",
                   "description": "A price before tax of the item that user added to the cart.",
@@ -1170,7 +1170,7 @@
                 "crust": "Classic Handtossed"
               },
               "qty": 1,
-              "priceOrigin": 79546
+              "price": 79546
             }]
           },
           "subtotal": {
@@ -1257,7 +1257,7 @@
                   "description": "A quantity of item that user added to the order.",
                   "nullable": false
                 },
-                "priceOrigin": {
+                "price": {
                   "type": "integer",
                   "format": "int32",
                   "description": "A price before tax of the item that user added to the order.",
@@ -1273,7 +1273,7 @@
                 "crust": "Classic Handtossed"
               },
               "qty": 1,
-              "priceOrigin": 79546
+              "price": 79546
             }]
           },
           "subtotal": {
@@ -1406,7 +1406,7 @@
                   "description": "A short description about a specific crust of a pizza.",
                   "nullable": false
                 },
-                "priceOrigin": {
+                "price": {
                   "type": "integer",
                   "format": "int32",
                   "description": "A price before tax of a pizza with specific size and crust.",
@@ -1513,7 +1513,7 @@
             "description": "A short description of a menu.",
             "nullable": false
           },
-          "priceOrigin": {
+          "price": {
             "type": "integer",
             "format": "int32",
             "description": "A price before tax of a menu.",
@@ -1659,7 +1659,7 @@
                   {
                     "crust": "Classic Handtossed",
                     "desc": "Roti pizza dengan ketebalan sedang, lembut di bagian dalam namun renyah di bagian luar.",
-                    "priceOrigin": 79546
+                    "price": 79546
                   }
                 ]
               }
@@ -1676,7 +1676,7 @@
           "category": "Side & Dessert",
           "ranges": "Chicken",
           "desc": "Sayap ayam tanpa tulang dengan sensasi pedas khas cabai habanero.",
-          "priceOrigin": 45455
+          "price": 45455
         }
       }
     },

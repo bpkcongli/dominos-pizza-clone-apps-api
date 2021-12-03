@@ -65,9 +65,25 @@ const Cart = {
   }) {
     return {
       items,
-      sub_total: subtotal,
+      subtotal,
       tax_fee: taxFee,
       delivery_fee: deliveryFee,
+      total,
+    };
+  },
+
+  mappingToModel({
+    items,
+    subtotal,
+    tax_fee,
+    delivery_fee,
+    total,
+  }) {
+    return {
+      items,
+      subtotal,
+      taxFee: tax_fee,
+      deliveryFee: delivery_fee,
       total,
     };
   },

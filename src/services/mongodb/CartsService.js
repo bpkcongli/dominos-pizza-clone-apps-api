@@ -2,7 +2,6 @@ const DatabaseUtils = require('../../utils/DatabaseUtils');
 const {Cart} = require('../../utils/ModelUtils');
 const NotFoundError = require('../../exceptions/NotFoundError');
 
-
 class CartsService {
   async updateCart(id, {
     items,
@@ -33,7 +32,7 @@ class CartsService {
     const users = await db.collection('users');
     const result = await users.findOne({user_id: id}, {projection: {_id: 0, cart: 1}});
     if (!result) throw new NotFoundError('Maaf, resource yang Anda minta tidak ditemukan pada server kami.');
-    return result.cart;
+    return Cart.mappingToModel(result.cart);
   }
 }
 
