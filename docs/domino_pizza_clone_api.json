@@ -48,6 +48,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after successfully doing the operation.",
+                  "required": ["status", "message", "data"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -66,6 +67,7 @@
                     "data": {
                       "type": "object",
                       "description": "A return data that was generated after successfully doing the operation.",
+                      "required": ["userId"],
                       "nullable": false,
                       "properties": {
                         "userId": {
@@ -113,6 +115,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after successfully doing the operation.",
+                  "required": ["status", "data"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -121,6 +124,7 @@
                     "data": {
                       "type": "object",
                       "description": "A return data that was generated after the operation.",
+                      "required": ["user"],
                       "nullable": false,
                       "properties": {
                         "user": {
@@ -189,6 +193,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after doing the operation.",
+                  "required": ["status", "message"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -247,6 +252,7 @@
               "schema": {
                 "type": "object",
                 "description": "A current password and a new password from the specific user.",
+                "required": ["currentPassword", "newPassword"],
                 "nullable": false,
                 "properties": {
                   "currentPassword": {
@@ -276,6 +282,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after doing the operation.",
+                  "required": ["status", "message"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -334,6 +341,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after doing the operation.",
+                  "required": ["status", "data"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -342,10 +350,12 @@
                     "data": {
                       "type": "object",
                       "description": "A return data that was generated after the operation.",
+                      "required": ["cart"],
                       "nullable": false,
                       "properties": {
                         "cart": {
                           "description": "An object represent the cart from specific user.",
+                          "required": ["userId"],
                           "allOf": [
                             {
                               "type": "object",
@@ -410,6 +420,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after doing the operation.",
+                  "required": ["status", "message"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -468,6 +479,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after successfully doing the operation.",
+                  "required": ["status", "data"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -476,6 +488,7 @@
                     "data": {
                       "type": "object",
                       "description": "A return data that was generated after the operation.",
+                      "required": ["orders"],
                       "nullable": false,
                       "properties": {
                         "orders": {
@@ -483,7 +496,7 @@
                           "description": "List of finished orders of the specific user.",
                           "nullable": false,
                           "items": {
-                            "$ref": "#/components/schemas/Order"
+                            "$ref": "#/components/schemas/GetOrder"
                           }
                         }
                       }
@@ -521,6 +534,7 @@
               "schema": {
                 "type": "object",
                 "description": "A user credentials including email and password.",
+                "required": ["email", "password"],
                 "nullable": false,
                 "properties": {
                   "email": {
@@ -548,6 +562,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after successfully doing the operation.",
+                  "required": ["status", "message", "data"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -566,6 +581,7 @@
                     "data": {
                       "type": "object",
                       "description": "A return data that was generated after successfully doing the operation.",
+                      "required": ["accessToken", "refreshToken"],
                       "nullable": false,
                       "properties": {
                         "accessToken": {
@@ -609,6 +625,7 @@
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": ["refreshToken"],
                 "properties": {
                   "refreshToken": {
                     "type": "string",
@@ -629,6 +646,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after successfully doing the operation.",
+                  "required": ["status", "message", "data"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -647,6 +665,7 @@
                     "data": {
                       "type": "object",
                       "description": "A return data that was generated after successfully doing the operation.",
+                      "required": ["accessToken"],
                       "nullable": false,
                       "properties": {
                         "accessToken": {
@@ -698,6 +717,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after successfully doing the operation.",
+                  "required": ["status", "message"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -840,6 +860,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after successfully doing the operation.",
+                  "required": ["status", "message", "data"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -858,6 +879,7 @@
                     "data": {
                       "type": "object",
                       "description": "A return data that was generated after successfully doing the operation.",
+                      "required": ["menuId"],
                       "nullable": false,
                       "properties": {
                         "menuId": {
@@ -906,6 +928,7 @@
                 "schema": {
                   "type": "object",
                   "description": "Some information that was generated after successfully doing the operation.",
+                  "required": ["status", "data"],
                   "nullable": false,
                   "properties": {
                     "status": {
@@ -914,6 +937,7 @@
                     "data": {
                       "type": "object",
                       "description": "A return data that was generated after the operation.",
+                      "required": ["menus"],
                       "nullable": false,
                       "properties": {
                         "menus": {
@@ -923,10 +947,48 @@
                           "items": {
                             "oneOf": [
                               {
-                                "$ref": "#/components/schemas/Pizza"
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "nullable": false,
+                                    "description": "Menu information and details.",
+                                    "properties": {
+                                      "menuId": {
+                                        "type": "string",
+                                        "description": "A unique ID of a specific menu.",
+                                        "nullable": false
+                                      }
+                                    },
+                                    "example": {
+                                      "$ref": "#/components/examples/GetPizza/value"
+                                    }
+                                  },
+                                  {
+                                    "$ref": "#/components/schemas/Pizza"
+                                  }
+                                ]
                               },
                               {
-                                "$ref": "#/components/schemas/NonPizza"
+                                "allOf": [
+                                  {
+                                    "type": "object",
+                                    "nullable": false,
+                                    "description": "Menu information and details.",
+                                    "properties": {
+                                      "menuId": {
+                                        "type": "string",
+                                        "description": "A unique ID of a specific menu.",
+                                        "nullable": false
+                                      }
+                                    },
+                                    "example": {
+                                      "$ref": "#/components/examples/GetNon-Pizza/value"
+                                    }
+                                  },
+                                  {
+                                    "$ref": "#/components/schemas/NonPizza"
+                                  }
+                                ]
                               }
                             ]
                           }
@@ -1013,7 +1075,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/Order"
+              "$ref": "#/components/schemas/PostOrder"
             }
           }
         }
@@ -1022,6 +1084,7 @@
     "schemas": {
       "User": {
         "type": "object",
+        "required": ["userId", "firstName", "lastName", "email", "dateOfBirth", "contact", "addresses", "password"],
         "nullable": false,
         "properties": {
           "firstName": {
@@ -1034,7 +1097,7 @@
           "lastName": {
             "type": "string",
             "description": "A last name of a specific user.",
-            "nullable": false,
+            "nullable": true,
             "example": "Candra"
           },
           "email": {
@@ -1048,28 +1111,11 @@
             "type": "string",
             "format": "date",
             "description": "A date of birth of a specific user.",
-            "nullable": false,
+            "nullable": true,
             "example": "2000-04-08"
           },
           "contact": {
-            "type": "object",
-            "description": "Contact information of a specific user.",
-            "nullable": false,
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": ["Mobile", "Home", "Office"],
-                "description": "Type of contact number whether mobile, home, or office.",
-                "nullable": false
-              },
-              "number": {
-                "type": "string",
-                "format": "numeric",
-                "description": "A contact number of a specific user.",
-                "nullable": false,
-                "example": "081234567890"
-              }
-            }
+            "$ref": "#/components/schemas/Contact"
           },
           "addresses": {
             "type": "array",
@@ -1077,101 +1123,144 @@
             "nullable": false,
             "minItems": 0,
             "items": {
+              "$ref": "#/components/schemas/Address"
+            }
+          }
+        }
+      },
+      "Items": {
+        "type": "array",
+        "nullable": false,
+        "description": "Any items that user added to the cart.",
+        "minItems": 0,
+        "items": {
+          "type": "object",
+          "nullable": false,
+          "description": "An object represent an item that user added to the cart.",
+          "required": ["name", "category", "qty", "price"],
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "A name of item that user added to the cart.",
+              "nullable": false
+            },
+            "category": {
+              "type": "string",
+              "description": "A category of item that user added to the cart.",
+              "nullable": false
+            },
+            "details": {
               "type": "object",
+              "description": "Details (if any) of the item that user added to the cart.",
               "nullable": false,
-              "description": "An address object correspond to specific user.",
               "properties": {
-                "type": {
+                "size": {
                   "type": "string",
-                  "description": "Type of address whether home address or office address.",
-                  "nullable": false
+                  "nullable": false,
+                  "description": "Detail about size (for pizza menu)"
                 },
-                "detail": {
+                "crust": {
                   "type": "string",
-                  "description": "Complete address including street name, building name, building number, block, clusters, etc.",
-                  "nullable": false
-                },
-                "district": {
-                  "type": "string",
-                  "description": "A district from user's address.",
-                  "nullable": false
-                },
-                "city": {
-                  "type": "string",
-                  "description": "A city from user's address.",
-                  "nullable": false
-                },
-                "province": {
-                  "type": "string",
-                  "description": "A province from user's address.",
-                  "nullable": false
+                  "nullable": false,
+                  "description": "Detail about crust (for pizza menu)"
                 }
               }
             },
-            "example": [{
-              "type": "Home",
-              "detail": "Perumahan Alam Permai, Jl. Cibodas Permai Blok A6 No.4 RT/RW 004/010",
-              "district": "Cibodas",
-              "city": "Kota Tangerang",
-              "province": "Banten"
-            }]
+            "qty": {
+              "type": "integer",
+              "format": "int32",
+              "minimum": 1,
+              "description": "A quantity of item that user added to the cart.",
+              "nullable": false
+            },
+            "price": {
+              "type": "integer",
+              "format": "int32",
+              "description": "A price before tax of the item that user added to the cart.",
+              "nullable": false
+            }
+          }
+        },
+        "example": [{
+          "name": "American Classic Cheeseburger",
+          "category": "Pizza",
+          "details": {
+            "size": "Medium",
+            "crust": "Classic Handtossed"
+          },
+          "qty": 1,
+          "price": 79546
+        }]
+      },
+      "Address": {
+        "type": "object",
+        "required": ["type", "detail", "district", "city", "province"],
+        "nullable": false,
+        "description": "An address object correspond to specific user.",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Type of address whether home address or office address.",
+            "nullable": false
+          },
+          "detail": {
+            "type": "string",
+            "description": "Complete address including street name, building name, building number, block, clusters, etc.",
+            "nullable": false
+          },
+          "district": {
+            "type": "string",
+            "description": "A district from user's address.",
+            "nullable": false
+          },
+          "city": {
+            "type": "string",
+            "description": "A city from user's address.",
+            "nullable": false
+          },
+          "province": {
+            "type": "string",
+            "description": "A province from user's address.",
+            "nullable": false
+          }
+        },
+        "example": {
+          "type": "Home",
+          "detail": "Perumahan Alam Permai, Jl. Cibodas Permai Blok A6 No.4 RT/RW 004/010",
+          "district": "Cibodas",
+          "city": "Kota Tangerang",
+          "province": "Banten"
+        }
+      },
+      "Contact": {
+        "type": "object",
+        "description": "Contact information from customer.",
+        "required": ["type", "number"],
+        "nullable": false,
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["Mobile", "Home", "Office"],
+            "description": "Type of contact number whether mobile, home, or office.",
+            "nullable": false,
+            "example": "Mobile"
+          },
+          "number": {
+            "type": "string",
+            "format": "numeric",
+            "description": "A contact number from customer.",
+            "nullable": false,
+            "example": "081234567890"
           }
         }
       },
       "Cart": {
         "type": "object",
+        "required": ["items", "subtotal", "taxFee", "deliveryFee", "total"],
         "nullable": false,
         "properties": {
           "items": {
-            "type": "array",
-            "nullable": false,
-            "description": "Any items that user added to the cart.",
-            "minItems": 0,
-            "items": {
-              "type": "object",
-              "nullable": false,
-              "description": "An object represent an item that user added to the cart.",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "A name of item that user added to the cart.",
-                  "nullable": false
-                },
-                "category": {
-                  "type": "string",
-                  "description": "A category of item that user added to the cart.",
-                  "nullable": false
-                },
-                "details": {
-                  "type": "object",
-                  "description": "Details (if any) of the item that user added to the cart.",
-                  "nullable": true
-                },
-                "qty": {
-                  "type": "integer",
-                  "format": "int32",
-                  "minimum": 1,
-                  "description": "A quantity of item that user added to the cart.",
-                  "nullable": false
-                },
-                "price": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "A price before tax of the item that user added to the cart.",
-                  "nullable": false
-                }
-              }
-            },
-            "example": [{
-              "name": "American Classic Cheeseburger",
-              "category": "Pizza",
-              "details": {
-                "size": "Medium",
-                "crust": "Classic Handtossed"
-              },
-              "qty": 1,
-              "price": 79546
-            }]
+            "$ref": "#/components/schemas/Items"
           },
           "subtotal": {
             "type": "integer",
@@ -1206,75 +1295,11 @@
       "Order": {
         "type": "object",
         "description": "An object represent an order and details.",
+        "required": ["orderId", "orderTime", "userId", "items", "subtotal", "taxFee", "deliveryFee", "total", "customerInfo", "deliveryAddress", "orderNow", "paymentMethod"],
         "nullable": false,
         "properties": {
-          "orderId": {
-            "type": "string",
-            "description": "A unique ID of a specific order.",
-            "nullable": false,
-            "example": "order-00000001"
-          },
-          "orderTime": {
-            "type": "string",
-            "description": "The date and time the order was made.",
-            "nullable": false,
-            "example": "2021-11-24 22:16:06"
-          },
-          "userId": {
-            "type": "string",
-            "description": "A unique ID of a specific user.",
-            "nullable": false,
-            "example": "user-00000001"
-          },
           "items": {
-            "type": "array",
-            "nullable": false,
-            "description": "Any items that user added to the order.",
-            "minItems": 1,
-            "items": {
-              "type": "object",
-              "nullable": false,
-              "description": "An object represent an item that user added to the order.",
-              "properties": {
-                "name": {
-                  "type": "string",
-                  "description": "A name of item that user added to the order.",
-                  "nullable": false
-                },
-                "category": {
-                  "type": "string",
-                  "description": "A category of item that user added to the order.",
-                  "nullable": false
-                },
-                "details": {
-                  "type": "object",
-                  "description": "Details (if any) of the item that user added to the order.",
-                  "nullable": true
-                },
-                "qty": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "A quantity of item that user added to the order.",
-                  "nullable": false
-                },
-                "price": {
-                  "type": "integer",
-                  "format": "int32",
-                  "description": "A price before tax of the item that user added to the order.",
-                  "nullable": false
-                }
-              }
-            },
-            "example": [{
-              "name": "American Classic Cheeseburger",
-              "category": "Pizza",
-              "details": {
-                "size": "Medium",
-                "crust": "Classic Handtossed"
-              },
-              "qty": 1,
-              "price": 79546
-            }]
+            "$ref": "#/components/schemas/Items"
           },
           "subtotal": {
             "type": "integer",
@@ -1304,57 +1329,50 @@
             "nullable": false,
             "example": 87500
           },
-          "deliveryAddress": {
+          "customerInfo": {
             "type": "object",
-            "description": "An address that the order was sent to.",
+            "description": "A brief details about a customer.",
+            "required": ["firstName", "lastName", "email", "contact"],
             "nullable": false,
             "properties": {
-              "type": {
+              "firstName": {
                 "type": "string",
-                "description": "Type of address whether home address or office address.",
-                "nullable": false
+                "description": "A first name from customer.",
+                "nullable": false,
+                "example": "Andrian"
               },
-              "detail": {
+              "lastName": {
                 "type": "string",
-                "description": "Complete address including street name, building name, building number, block, clusters, etc.",
-                "nullable": false
+                "description": "A last name from customer.",
+                "nullable": false,
+                "example": "Candra"
               },
-              "district": {
+              "email": {
                 "type": "string",
-                "description": "A district from delivery address.",
-                "nullable": false
+                "description": "",
+                "nullable": false,
+                "example": "andrian8367@gmail.com"
               },
-              "city": {
-                "type": "string",
-                "description": "A city from delivery address.",
-                "nullable": false
-              },
-              "province": {
-                "type": "string",
-                "description": "A province from delivery address.",
-                "nullable": false
+              "contact": {
+                "$ref": "#/components/schemas/Contact"
               }
-            },
-            "example": {
-              "type": "Home",
-              "detail": "Perumahan Alam Permai, Jl. Cibodas Permai Blok A6 No.4 RT/RW 004/010",
-              "district": "Cibodas",
-              "city": "Kota Tangerang",
-              "province": "Banten"
             }
+          },
+          "deliveryAddress": {
+            "$ref": "#/components/schemas/Address"
           },
           "orderNow": {
             "type": "boolean",
             "description": "The user's order made now or later.",
             "nullable": false,
-            "example": true
+            "example": false
           },
           "orderLaterAfter": {
             "type": "integer",
             "format": "int32",
             "description": "The user's order made after a certain period of time (in minutes).",
-            "nullable": true,
-            "example": null
+            "nullable": false,
+            "example": 60
           },
           "paymentMethod": {
             "type": "string",
@@ -1364,9 +1382,52 @@
           }
         }
       },
+      "GetOrder": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "orderId": {
+                "type": "string",
+                "description": "A unique ID of a specific order.",
+                "nullable": false,
+                "example": "order-00000001"
+              },
+              "orderTime": {
+                "type": "string",
+                "description": "The date and time the order was made.",
+                "nullable": false,
+                "example": "2021-11-24 22:16:06"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/Order"
+          }
+        ]
+      },
+      "PostOrder": {
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "userId": {
+                "type": "string",
+                "description": "A unique ID of a specific user.",
+                "nullable": false,
+                "example": "user-00000001"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/Order"
+          }
+        ]
+      },
       "PizzaSize": {
         "type": "object",
         "description": "An object represent a size of a pizza.",
+        "required": ["size", "sizeInInch", "totalSlice", "crusts"],
         "nullable": false,
         "properties": {
           "size": {
@@ -1394,6 +1455,7 @@
             "items": {
               "type": "object",
               "description": "An object represent a kind of pizza crust.",
+              "required": ["crust", "desc", "price"],
               "nullable": false,
               "properties": {
                 "crust": {
@@ -1420,13 +1482,9 @@
       "Pizza": {
         "type": "object",
         "nullable": false,
+        "required": ["menuId", "name", "imageUrl", "category", "ranges", "details"],
         "description": "Menu information and details.",
         "properties": {
-          "menuId": {
-            "type": "string",
-            "description": "A unique ID of a specific menu.",
-            "nullable": false
-          },
           "name": {
             "type": "string",
             "description": "A name of a menu.",
@@ -1435,7 +1493,7 @@
           "imageUrl": {
             "type": "string",
             "description": "A url link of the image of a menu.",
-            "nullable": false
+            "nullable": true
           },
           "category": {
             "type": "string",
@@ -1450,7 +1508,8 @@
           "details": {
             "type": "object",
             "description": "A details of a menu.",
-            "nullable": true,
+            "required": ["toppings", "sizes"],
+            "nullable": false,
             "properties": {
               "toppings": {
                 "type": "array",
@@ -1473,21 +1532,14 @@
               }
             }
           }
-        },
-        "example": {
-          "$ref": "#/components/examples/Pizza/value"
         }
       },
       "NonPizza": {
         "type": "object",
         "nullable": false,
+        "required": ["menuId", "name", "imageUrl", "category", "ranges", "desc", "price"],
         "description": "Menu information and details.",
         "properties": {
-          "menuId": {
-            "type": "string",
-            "description": "A unique ID of a specific menu.",
-            "nullable": false
-          },
           "name": {
             "type": "string",
             "description": "A name of a menu.",
@@ -1496,7 +1548,7 @@
           "imageUrl": {
             "type": "string",
             "description": "A url link directly to a location of the image from a menu is stored.",
-            "nullable": false
+            "nullable": true
           },
           "category": {
             "type": "string",
@@ -1519,9 +1571,6 @@
             "description": "A price before tax of a menu.",
             "nullable": false
           }
-        },
-        "example": {
-          "$ref": "#/components/examples/Non-Pizza/value"
         }
       },
       "ResponseStatus": {
@@ -1547,6 +1596,7 @@
       "ResponseError": {
         "type": "object",
         "description": "Some information that was generated after doing the operation.",
+        "required": ["status", "message"],
         "nullable": false,
         "properties": {
           "status": {
@@ -1634,22 +1684,39 @@
       "Pizza": {
         "description": "Example for Pizza menu",
         "value": {
+          "name": "American Classic Cheeseburger",
+          "imageUrl": "https://conglicorp.net/menu/american-classic-cheeseburger-550x550px.png",
+          "category": "Pizza",
+          "ranges": "Premium",
+          "details": {
+            "toppings": ["Tomato Sauce", "Mustard Sauce", "Tomato", "Beef Rasher", "Beef Crumble", "Onion", "Slice Cheese", "Mozarella Cheese"],
+            "sizes": [
+              {
+                "size": "Medium",
+                "sizeInInch": 9,
+                "totalSlice": 6,
+                "crusts": [
+                  {
+                    "crust": "Classic Handtossed",
+                    "desc": "Roti pizza dengan ketebalan sedang, lembut di bagian dalam namun renyah di bagian luar.",
+                    "price": 79546
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      },
+      "GetPizza": {
+        "description": "Example for Pizza menu",
+        "value": {
           "menuId": "menu-00000001",
           "name": "American Classic Cheeseburger",
           "imageUrl": "https://conglicorp.net/menu/american-classic-cheeseburger-550x550px.png",
           "category": "Pizza",
           "ranges": "Premium",
           "details": {
-            "toppings": [
-              "Tomato Sauce",
-              "Mustard Sauce",
-              "Tomato",
-              "Beef Rasher",
-              "Beef Crumble",
-              "Onion",
-              "Slice Cheese",
-              "Mozarella Cheese"
-            ],
+            "toppings": ["Tomato Sauce", "Mustard Sauce", "Tomato", "Beef Rasher", "Beef Crumble", "Onion", "Slice Cheese", "Mozarella Cheese"],
             "sizes": [
               {
                 "size": "Medium",
@@ -1668,6 +1735,17 @@
         }
       },
       "Non-Pizza": {
+        "description": "Example for Non-Pizza menu",
+        "value": {
+          "name": "Habanero Boneless Wings (6 pcs)",
+          "imageUrl": "https://conglicorp.net/menu/habanero-boneless-wings-550x550px.png",
+          "category": "Side & Dessert",
+          "ranges": "Chicken",
+          "desc": "Sayap ayam tanpa tulang dengan sensasi pedas khas cabai habanero.",
+          "price": 45455
+        }
+      },
+      "GetNon-Pizza": {
         "description": "Example for Non-Pizza menu",
         "value": {
           "menuId": "menu-00000002",

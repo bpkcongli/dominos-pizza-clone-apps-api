@@ -5,8 +5,8 @@ const CartPayloadSchema = Joi.object({
     name: Joi.string().required(),
     category: Joi.string().required(),
     details: Joi.object({
-      size: Joi.string(),
-      crust: Joi.string(),
+      size: Joi.alternatives().conditional('crust', {not: undefined, then: Joi.string().required()}),
+      crust: Joi.alternatives().conditional('size', {not: undefined, then: Joi.string().required()}),
     }),
     qty: Joi.number().integer().min(1).required(),
     price: Joi.number().integer().required(),
