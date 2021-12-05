@@ -89,8 +89,50 @@ const Cart = {
   },
 };
 
+const Order = {
+  mappingToDB({
+    orderId,
+    orderTime,
+    userId,
+    items,
+    subtotal,
+    taxFee,
+    deliveryFee,
+    total,
+    customerInfo,
+    deliveryAddress,
+    orderNow,
+    orderLaterAfter,
+    paymentMethod,
+  }) {
+    const {firstName: first_name, lastName: last_name, ...customer_info} = customerInfo;
+    return {
+      order_id: orderId,
+      order_time, orderTime,
+      user_id: userId,
+      items,
+      subtotal,
+      tax_fee: taxFee,
+      delivery_fee: deliveryFee,
+      total,
+      customer_info: {
+        first_name,
+        last_name,
+        ...customer_info,
+      },
+      delivery_address: deliveryAddress,
+      order_now: orderNow,
+      order_later_after: orderLaterAfter,
+      payment_method: paymentMethod,
+    };
+  },
+
+  mappingToModel() {},
+};
+
 module.exports = {
   nanoid,
   User,
   Cart,
+  Order,
 };

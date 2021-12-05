@@ -1128,60 +1128,54 @@
           }
         }
       },
-      "Items": {
-        "type": "array",
+      "Item": {
+        "type": "object",
         "nullable": false,
-        "description": "Any items that user added to the cart.",
-        "minItems": 0,
-        "items": {
-          "type": "object",
-          "nullable": false,
-          "description": "An object represent an item that user added to the cart.",
-          "required": ["name", "category", "qty", "price"],
-          "properties": {
-            "name": {
-              "type": "string",
-              "description": "A name of item that user added to the cart.",
-              "nullable": false
-            },
-            "category": {
-              "type": "string",
-              "description": "A category of item that user added to the cart.",
-              "nullable": false
-            },
-            "details": {
-              "type": "object",
-              "description": "Details (if any) of the item that user added to the cart.",
-              "nullable": false,
-              "properties": {
-                "size": {
-                  "type": "string",
-                  "nullable": false,
-                  "description": "Detail about size (for pizza menu)"
-                },
-                "crust": {
-                  "type": "string",
-                  "nullable": false,
-                  "description": "Detail about crust (for pizza menu)"
-                }
+        "description": "An object represent an item that user added to the cart.",
+        "required": ["name", "category", "qty", "price"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "A name of item that user added to the cart.",
+            "nullable": false
+          },
+          "category": {
+            "type": "string",
+            "description": "A category of item that user added to the cart.",
+            "nullable": false
+          },
+          "details": {
+            "type": "object",
+            "description": "Details (if any) of the item that user added to the cart.",
+            "nullable": false,
+            "properties": {
+              "size": {
+                "type": "string",
+                "nullable": false,
+                "description": "Detail about size (for pizza menu)"
+              },
+              "crust": {
+                "type": "string",
+                "nullable": false,
+                "description": "Detail about crust (for pizza menu)"
               }
-            },
-            "qty": {
-              "type": "integer",
-              "format": "int32",
-              "minimum": 1,
-              "description": "A quantity of item that user added to the cart.",
-              "nullable": false
-            },
-            "price": {
-              "type": "integer",
-              "format": "int32",
-              "description": "A price before tax of the item that user added to the cart.",
-              "nullable": false
             }
+          },
+          "qty": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 1,
+            "description": "A quantity of item that user added to the cart.",
+            "nullable": false
+          },
+          "price": {
+            "type": "integer",
+            "format": "int32",
+            "description": "A price before tax of the item that user added to the cart.",
+            "nullable": false
           }
         },
-        "example": [{
+        "example": {
           "name": "American Classic Cheeseburger",
           "category": "Pizza",
           "details": {
@@ -1190,7 +1184,7 @@
           },
           "qty": 1,
           "price": 79546
-        }]
+        }
       },
       "Address": {
         "type": "object",
@@ -1260,7 +1254,13 @@
         "nullable": false,
         "properties": {
           "items": {
-            "$ref": "#/components/schemas/Items"
+            "type": "array",
+            "nullable": false,
+            "description": "Any items that user added to the cart.",
+            "minItems": 0,
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
           },
           "subtotal": {
             "type": "integer",
@@ -1299,7 +1299,13 @@
         "nullable": false,
         "properties": {
           "items": {
-            "$ref": "#/components/schemas/Items"
+            "type": "array",
+            "nullable": false,
+            "description": "Any items that user added to the cart.",
+            "minItems": 1,
+            "items": {
+              "$ref": "#/components/schemas/Item"
+            }
           },
           "subtotal": {
             "type": "integer",
@@ -1349,6 +1355,7 @@
               },
               "email": {
                 "type": "string",
+                "format": "email",
                 "description": "",
                 "nullable": false,
                 "example": "andrian8367@gmail.com"
