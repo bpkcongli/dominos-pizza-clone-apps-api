@@ -44,14 +44,14 @@ class OrdersService {
   }
 
   async getOrderByUserId(id) {
+    await this._verifyUser(id);
     const db = await DatabaseUtils.createConnection();
     const orders = await db.collection('orders');
-    await this._verifyUser(id);
-    const result = await orders.find(
+    const results = await orders.find(
         {user_id: id},
         {projection: {_id: 0, user_id: 0}},
-    ).toArray();
-    return result;
+    );
+    return (await results.toArray()).map((result) => Order.mappingToModel(result));
   }
 
   async _verifyUser(id) {

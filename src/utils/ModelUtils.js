@@ -108,7 +108,7 @@ const Order = {
     const {firstName: first_name, lastName: last_name, ...customer_info} = customerInfo;
     return {
       order_id: orderId,
-      order_time, orderTime,
+      order_time: orderTime,
       user_id: userId,
       items,
       subtotal,
@@ -127,7 +127,40 @@ const Order = {
     };
   },
 
-  mappingToModel() {},
+  mappingToModel({
+    order_id,
+    order_time,
+    items,
+    subtotal,
+    tax_fee,
+    delivery_fee,
+    total,
+    customer_info,
+    delivery_address,
+    order_now,
+    order_later_after,
+    payment_method,
+  }) {
+    const {first_name: firstName, last_name: lastName, ...customerInfo} = customer_info;
+    return {
+      orderId: order_id,
+      orderTime: order_time,
+      items,
+      subtotal,
+      taxFee: tax_fee,
+      deliveryFee: delivery_fee,
+      total,
+      customerInfo: {
+        firstName,
+        lastName,
+        ...customerInfo,
+      },
+      deliveryAddress: delivery_address,
+      orderNow: order_now,
+      orderLaterAfter: order_later_after,
+      paymentMethod: payment_method,
+    };
+  },
 };
 
 module.exports = {

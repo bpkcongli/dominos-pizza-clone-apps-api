@@ -6,14 +6,17 @@ const ClientError = require('./exceptions/ClientError');
 // import all plugins
 const users = require('./api/users/index');
 const carts = require('./api/carts/index');
+const orders = require('./api/orders/index');
 
 // import all services
 const UsersService = require('./services/mongodb/UsersService');
 const CartsService = require('./services/mongodb/CartsService');
+const OrdersService = require('./services/mongodb/OrdersService');
 
 // import all validators
 const UsersValidator = require('./validators/users/index');
 const CartsValidator = require('./validators/carts/index');
+const OrdersValidator = require('./validators/orders/index');
 
 
 const init = async () => {
@@ -30,6 +33,7 @@ const init = async () => {
   // initiate all services
   const usersService = new UsersService();
   const cartsService = new CartsService();
+  const ordersService = new OrdersService();
 
   // error handling automatically run before the response is sent
   server.ext('onPreResponse', (request, h) => {
@@ -71,6 +75,16 @@ const init = async () => {
       options: {
         service: cartsService,
         validator: CartsValidator,
+      },
+      routes: {
+        prefix: '/api/v1',
+      },
+    },
+    {
+      plugin: orders,
+      options: {
+        service: ordersService,
+        validator: OrdersValidator,
       },
       routes: {
         prefix: '/api/v1',

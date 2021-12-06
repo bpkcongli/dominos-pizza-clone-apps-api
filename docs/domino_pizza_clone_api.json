@@ -1295,7 +1295,7 @@
       "Order": {
         "type": "object",
         "description": "An object represent an order and details.",
-        "required": ["orderId", "orderTime", "userId", "items", "subtotal", "taxFee", "deliveryFee", "total", "customerInfo", "deliveryAddress", "orderNow", "paymentMethod"],
+        "required": ["orderId", "orderTime", "userId", "items", "subtotal", "taxFee", "deliveryFee", "total", "customerInfo", "deliveryAddress", "orderNow", "orderLaterAfter", "paymentMethod"],
         "nullable": false,
         "properties": {
           "items": {
@@ -1377,7 +1377,7 @@
           "orderLaterAfter": {
             "type": "integer",
             "format": "int32",
-            "description": "The user's order made after a certain period of time (in minutes).",
+            "description": "The user's order made after a certain period of time (in minutes). If orderNow is true, orderLaterAfter will be 0.",
             "nullable": false,
             "example": 60
           },
