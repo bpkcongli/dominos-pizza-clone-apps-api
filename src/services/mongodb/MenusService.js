@@ -17,11 +17,7 @@ class MenusService {
   async getMenusByCategory(category = null) {
     const db = await DatabaseUtils.createConnection();
     const menus = await db.collection('menus');
-    let results;
-    if (category) {
-      results = await menus.find({category: Menu.getMenuCategoryByKeyword(category)});
-    }
-    results = await menus.find();
+    const results = (category) ? await menus.find({category: Menu.getMenuCategoryByKeyword(category)}) : await menus.find();
     return (await results.toArray()).map((result) => Menu.mappingToModel(result));
   }
 }

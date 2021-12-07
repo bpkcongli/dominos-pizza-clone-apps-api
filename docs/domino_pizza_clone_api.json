@@ -1499,6 +1499,7 @@
           },
           "imageUrl": {
             "type": "string",
+            "format": "url",
             "description": "A url link of the image of a menu.",
             "nullable": true
           },
@@ -1554,6 +1555,7 @@
           },
           "imageUrl": {
             "type": "string",
+            "format": "url",
             "description": "A url link directly to a location of the image from a menu is stored.",
             "nullable": true
           },
