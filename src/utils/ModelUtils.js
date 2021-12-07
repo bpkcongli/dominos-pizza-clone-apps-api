@@ -163,9 +163,117 @@ const Order = {
   },
 };
 
+const Menu = {
+  mappingToDB({
+    menuId,
+    name,
+    imageUrl,
+    category,
+    ranges,
+    details,
+    desc,
+    price,
+  }) {
+    let targetDetail;
+
+    if (details && !desc && !price) {
+      const {toppings, sizes} = details;
+      targetDetail = {
+        toppings,
+        sizes: [],
+      };
+
+      sizes.forEach((size) => {
+        const {sizeInInch, totalSlice, ...sizeInfo} = size;
+        targetDetail.sizes.push({
+          ...sizeInfo,
+          size_in_inch: sizeInInch,
+          total_slice: totalSlice,
+        });
+      });
+
+      return {
+        menu_id: menuId,
+        name,
+        image_url: imageUrl,
+        category,
+        ranges,
+        details: targetDetail,
+      };
+    }
+
+    return {
+      menu_id: menuId,
+      name,
+      image_url: imageUrl,
+      category,
+      ranges,
+      desc,
+      price,
+    };
+  },
+
+  mappingToModel({
+    menu_id,
+    name,
+    image_url,
+    category,
+    ranges,
+    details,
+    desc,
+    price,
+  }) {
+    let targetDetail;
+
+    if (details && !desc && !price) {
+      const {toppings, sizes} = details;
+      targetDetail = {
+        toppings,
+        sizes: [],
+      };
+      sizes.forEach((size) => {
+        const {size_in_inch, total_slice, ...size_info} = size;
+        targetDetail.sizes.push({
+          ...size_info,
+          sizeInInch: size_in_inch,
+          totalSlice: total_slice,
+        });
+      });
+      return {
+        menuId: menu_id,
+        name,
+        imageUrl: image_url,
+        category,
+        ranges,
+        details: targetDetail,
+      };
+    }
+
+    return {
+      menuId: menu_id,
+      name,
+      imageUrl: image_url,
+      category,
+      ranges,
+      desc,
+      price,
+    };
+  },
+
+  getMenuCategoryByKeyword(keyword) {
+    const category = {
+      'pizza': 'Pizza',
+      'side-dessert': 'Side & Dessert',
+      'drink': 'Drink',
+    };
+    return category[keyword];
+  },
+};
+
 module.exports = {
   nanoid,
   User,
   Cart,
   Order,
+  Menu,
 };

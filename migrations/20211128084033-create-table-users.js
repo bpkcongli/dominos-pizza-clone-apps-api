@@ -4,6 +4,6 @@ module.exports = {
   },
 
   async down(db) {
-    await db.users.drop();
+    await db.collection('users').drop();
   },
 };
