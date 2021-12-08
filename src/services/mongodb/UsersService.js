@@ -3,6 +3,7 @@ const DatabaseUtils = require('../../utils/DatabaseUtils');
 const {nanoid, User} = require('../../utils/ModelUtils');
 const BadRequestError = require('../../exceptions/BadRequestError');
 const NotFoundError = require('../../exceptions/NotFoundError');
+const AuthenticationError = require('../../exceptions/AuthenticationError');
 
 class UsersService {
   async addUser({
@@ -100,6 +101,16 @@ class UsersService {
         'password': newHashedPassword,
       },
     });
+  }
+
+  async verifyUserCredentials({email, password}) {
+    const db = await DatabaseUtils.createConnection();
+    const users = await db.collection('users');
+    const {user_id: userId, password: hashedPassword} = await users.findOne({email}, {projection: {_id: 0, user_id: 1, password: 1}});
+
+    const result = await bcrypt.compare(password, hashedPassword);
+    if (!result) throw new AuthenticationError('Maaf, kredensial yang Anda masukkan salah.');
+    return userId;
   }
 
   async _verifyEmail(email) {

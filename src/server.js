@@ -8,19 +8,24 @@ const users = require('./api/users/index');
 const carts = require('./api/carts/index');
 const orders = require('./api/orders/index');
 const menus = require('./api/menus/index');
+const authentications = require('./api/authentications/index');
 
 // import all services
 const UsersService = require('./services/mongodb/UsersService');
 const CartsService = require('./services/mongodb/CartsService');
 const OrdersService = require('./services/mongodb/OrdersService');
 const MenusService = require('./services/mongodb/MenusService');
+const AuthenticationsService = require('./services/mongodb/AuthenticationsService');
 
 // import all validators
 const UsersValidator = require('./validators/users/index');
 const CartsValidator = require('./validators/carts/index');
 const OrdersValidator = require('./validators/orders/index');
 const MenusValidator = require('./validators/menus/index');
+const AuthenticationsValidator = require('./validators/authentications/index');
 
+// token manager
+const TokenManager = require('./tokenize/TokenManager');
 
 const init = async () => {
   const server = Hapi.server({
@@ -38,6 +43,7 @@ const init = async () => {
   const cartsService = new CartsService();
   const ordersService = new OrdersService();
   const menusService = new MenusService();
+  const authenticationsService = new AuthenticationsService();
 
   // error handling automatically run before the response is sent
   server.ext('onPreResponse', (request, h) => {
@@ -99,6 +105,18 @@ const init = async () => {
       options: {
         service: menusService,
         validator: MenusValidator,
+      },
+      routes: {
+        prefix: '/api/v1',
+      },
+    },
+    {
+      plugin: authentications,
+      options: {
+        usersService,
+        authenticationsService,
+        validator: AuthenticationsValidator,
+        tokenManager: TokenManager,
       },
       routes: {
         prefix: '/api/v1',
