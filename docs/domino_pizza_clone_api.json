@@ -155,7 +155,7 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/AuthenticationNeededError"
           },
           "403": {
             "$ref": "#/components/responses/AuthorizationError"
@@ -215,7 +215,7 @@
             "$ref": "#/components/responses/BadRequestError"
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/AuthenticationNeededError"
           },
           "403": {
             "$ref": "#/components/responses/AuthorizationError"
@@ -304,7 +304,7 @@
             "$ref": "#/components/responses/BadRequestError"
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/AuthenticationNeededError"
           },
           "403": {
             "$ref": "#/components/responses/AuthorizationError"
@@ -382,7 +382,7 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/AuthenticationNeededError"
           },
           "403": {
             "$ref": "#/components/responses/AuthorizationError"
@@ -442,7 +442,7 @@
             "$ref": "#/components/responses/BadRequestError"
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/AuthenticationNeededError"
           },
           "403": {
             "$ref": "#/components/responses/AuthorizationError"
@@ -507,7 +507,7 @@
             }
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/AuthenticationNeededError"
           },
           "403": {
             "$ref": "#/components/responses/AuthorizationError"
@@ -539,6 +539,7 @@
                 "properties": {
                   "email": {
                     "type": "string",
+                    "format": "email",
                     "description": "An email of a specific user.",
                     "nullable": false,
                     "example": "andrian8367@gmail.com"
@@ -547,6 +548,7 @@
                     "type": "string",
                     "description": "A password of a specific user.",
                     "nullable": false,
+                    "minLength": 8,
                     "example": "rahasia2021"
                   }
                 }
@@ -607,7 +609,7 @@
             "$ref": "#/components/responses/BadRequestError"
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/BadAuthenticationError"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"
@@ -684,9 +686,6 @@
           "400": {
             "$ref": "#/components/responses/BadRequestError"
           },
-          "401": {
-            "$ref": "#/components/responses/AuthenticationError"
-          },
           "500": {
             "$ref": "#/components/responses/ServerError"
           }
@@ -740,9 +739,6 @@
           },
           "400": {
             "$ref": "#/components/responses/BadRequestError"
-          },
-          "401": {
-            "$ref": "#/components/responses/AuthenticationError"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"
@@ -808,7 +804,7 @@
             "$ref": "#/components/responses/BadRequestError"
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/AuthenticationNeededError"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"
@@ -899,7 +895,7 @@
             "$ref": "#/components/responses/BadRequestError"
           },
           "401": {
-            "$ref": "#/components/responses/AuthenticationError"
+            "$ref": "#/components/responses/AuthenticationNeededError"
           },
           "500": {
             "$ref": "#/components/responses/ServerError"
@@ -1632,7 +1628,7 @@
           }
         }
       },
-      "AuthenticationError": {
+      "AuthenticationNeededError": {
         "description": "The client uses a incorrect credentials to authenticate to the server.",
         "content": {
           "application/json": {
@@ -1642,6 +1638,20 @@
             "example": {
               "status": "fail",
               "message": "Maaf, Anda membutuhkan kredensial untuk mengakses resource ini."
+            }
+          }
+        }
+      },
+      "BadAuthenticationError": {
+        "description": "The client uses a incorrect credentials to authenticate to the server.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ResponseError"
+            },
+            "example": {
+              "status": "fail",
+              "message": "Maaf, kredensial yang Anda masukkan salah."
             }
           }
         }
