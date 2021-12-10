@@ -3,6 +3,9 @@ const routes = (handler) => [
     method: 'POST',
     path: '/menus',
     handler: handler.postMenuHandler,
+    options: {
+      auth: 'dominos_pizza_jwt',
+    },
   },
   {
     method: 'GET',

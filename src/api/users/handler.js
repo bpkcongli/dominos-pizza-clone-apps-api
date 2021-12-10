@@ -1,3 +1,5 @@
+const AuthorizationError = require('../../exceptions/AuthorizationError');
+
 class UsersHandler {
   constructor(service, validator) {
     this._service = service;
@@ -25,6 +27,9 @@ class UsersHandler {
     const {userId} = request.params;
     const user = await this._service.getUserById(userId);
 
+    const {id: credentialId} = request.auth.credentials;
+    if (userId !== credentialId) throw new AuthorizationError('Maaf, Anda tidak memiliki otorisasi untuk mengakses resource ini.');
+
     return {
       'status': 'success',
       'data': {
@@ -33,10 +38,14 @@ class UsersHandler {
     };
   }
 
-  async putSpecificUserHandler(request, h) {
+  async putSpecificUserHandler(request) {
     this._validator.validateUpdateUserPayload(request.payload);
     const {userId} = request.params;
+
     await this._service.updateUserById(userId, request.payload);
+
+    const {id: credentialId} = request.auth.credentials;
+    if (userId !== credentialId) throw new AuthorizationError('Maaf, Anda tidak memiliki otorisasi untuk mengakses resource ini.');
 
     return {
       'status': 'success',
@@ -50,6 +59,9 @@ class UsersHandler {
     const {currentPassword, newPassword} = request.payload;
 
     await this._service.updateUserPassword(userId, {currentPassword, newPassword});
+
+    const {id: credentialId} = request.auth.credentials;
+    if (userId !== credentialId) throw new AuthorizationError('Maaf, Anda tidak memiliki otorisasi untuk mengakses resource ini.');
 
     return {
       'status': 'success',

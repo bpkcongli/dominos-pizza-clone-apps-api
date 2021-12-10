@@ -1,5 +1,6 @@
 // import all requirement modules
 const Hapi = require('@hapi/hapi');
+const Jwt = require('@hapi/jwt');
 require('dotenv').config();
 const ClientError = require('./exceptions/ClientError');
 
@@ -67,6 +68,30 @@ const init = async () => {
     }
 
     return response.continue || response;
+  });
+
+  // register external plugin
+  await server.register([
+    {
+      plugin: Jwt,
+    },
+  ]);
+
+  // authentication strategy using jwt
+  server.auth.strategy('dominos_pizza_jwt', 'jwt', {
+    keys: process.env.ACCESS_TOKEN_KEY,
+    verify: {
+      aud: false,
+      iss: false,
+      sub: false,
+      maxAgeSec: process.env.ACCESS_TOKEN_AGE,
+    },
+    validate: (artifacts) => ({
+      isValid: true,
+      credentials: {
+        id: artifacts.decoded.payload.userId,
+      },
+    }),
   });
 
   await server.register([

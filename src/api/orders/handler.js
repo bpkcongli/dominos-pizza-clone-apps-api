@@ -1,3 +1,5 @@
+const AuthorizationError = require('../../exceptions/AuthorizationError');
+
 class OrdersHandler {
   constructor(service, validator) {
     this._service = service;
@@ -22,6 +24,9 @@ class OrdersHandler {
   async getSpecificUserOrdersHandler(request) {
     const {userId} = request.params;
     const orders = await this._service.getOrderByUserId(userId);
+
+    const {id: credentialId} = request.auth.credentials;
+    if (userId !== credentialId) throw new AuthorizationError('Maaf, Anda tidak memiliki otorisasi untuk mengakses resource ini.');
 
     return {
       'status': 'success',
