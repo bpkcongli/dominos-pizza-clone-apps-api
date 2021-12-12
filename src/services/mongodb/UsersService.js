@@ -51,7 +51,7 @@ class UsersService {
   async getUserById(id) {
     const db = await DatabaseUtils.createConnection();
     const users = await db.collection('users');
-    const result = await users.findOne({user_id: id});
+    const result = await users.findOne({user_id: id}, {projection: {_id: 0, password: 0}});
     if (!result) throw new NotFoundError('Maaf, resource yang Anda minta tidak ditemukan pada server kami.');
     return User.mappingToModel(result);
   }
@@ -86,7 +86,7 @@ class UsersService {
   async updateUserPassword(id, {currentPassword, newPassword}) {
     const db = await DatabaseUtils.createConnection();
     const users = await db.collection('users');
-    const targetUser = await users.findOne({user_id: id});
+    const targetUser = await users.findOne({user_id: id}, {projection: {_id: 0, password: 1}});
 
     if (!targetUser) throw new NotFoundError('Maaf, resource yang Anda minta tidak ditemukan pada server kami.');
 
@@ -116,7 +116,7 @@ class UsersService {
   async _verifyEmail(email) {
     const db = await DatabaseUtils.createConnection();
     const users = await db.collection('users');
-    const result = await users.findOne({email});
+    const result = await users.count({email});
 
     if (result) throw new BadRequestError('Gagal menambahkan user. Email sudah pernah digunakan.');
   }

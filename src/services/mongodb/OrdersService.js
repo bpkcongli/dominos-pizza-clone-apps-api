@@ -57,7 +57,7 @@ class OrdersService {
   async _verifyUser(id) {
     const db = await DatabaseUtils.createConnection();
     const users = await db.collection('users');
-    const result = await users.findOne({user_id: id}, {projection: {_id: 0, user_id: 1}});
+    const result = await users.count({user_id: id});
     if (!result) throw new NotFoundError('Maaf, resource yang Anda minta tidak ditemukan pada server kami.');
   }
 }

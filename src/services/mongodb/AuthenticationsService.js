@@ -11,7 +11,7 @@ class AuthenticationsService {
   async verifyRefreshToken(refreshToken) {
     const db = await DatabaseUtils.createConnection();
     const authentications = await db.collection('authentications');
-    const result = await authentications.findOne({refresh_token: refreshToken});
+    const result = await authentications.count({refresh_token: refreshToken});
 
     if (!result) throw new BadRequestError('Maaf, refresh token tidak dapat ditemukan di database.');
   }
